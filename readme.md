@@ -1,0 +1,29 @@
+1. Kotlin/Swift Knowledge
+- Kotlin Guidelines and Courses: https://developer.android.com/courses/android-basics-kotlin/course 
+  - Estimated duration 1.5 week
+  - From 13 Jan to 26 Jan (Accounting for CNY holidays)
+  - [x] Chapter 1
+  - [x] Chapter 2
+  - [x] Chapter 3
+  - [x] Chapter 4
+  - [x] Chapter 5
+  - [x] Chapter 6
+- Create a news application 
+  - Estimated timeline 3 days
+  - From 27 Jan to 31 Jan
+  - Use this API https://newsapi.org/ to load the news data
+  - The application should have these features:
+    - [x] Connect to https://newsapi.org/ api
+    - [x] Home Page should show a List of the news 
+    - [x] When a user clicks on the news item, a news detail should appear
+    - [x] User should be able to share the news 
+- Clean/SOLID Architecture
+  - [x] Read documentation
+  - [] Convert news application to Clean/SOLID Architecture
+- Understand P2P business 
+  - [x] Basic Flow
+  - [x] Introducton of maker
+  - [x] Introduction of function of receiving and paying setting
+  - [x] P2P Marketplace trading
+  - [x] P2P Order related
+  - [x] P2P Risk Control Strategy
