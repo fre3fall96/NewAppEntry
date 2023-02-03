@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        android:onClick="@{()->navtest.getDetails(newsObject)}"
+        android:onClick="@{()->navtest}"
         android:padding="15dp"
         tools:context="com.example.newappentry.overview.OverViewFragment">
 

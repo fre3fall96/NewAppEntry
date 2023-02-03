@@ -2,17 +2,13 @@ package com.example.newappentry.overview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
-import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.example.newappentry.databinding.NewListItemBinding
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newappentry.R
-import com.example.newappentry.databinding.FragmentOverviewBinding
+import com.example.newappentry.databinding.NewListItemBinding
 import com.example.newappentry.network.ObjectArticleInfo
 
-class NewsAdapter(val onItemClick:(objectArticleInfo : ObjectArticleInfo, position:Int)->Unit) : ListAdapter<ObjectArticleInfo, NewsAdapter.NewsHolder>(
+class NewsAdapter (val onItemClick:(objectArticleInfo : ObjectArticleInfo, position:Int)->Unit) : ListAdapter<ObjectArticleInfo, NewsAdapter.NewsHolder>(
     DiffCallBack
 ) {
 
@@ -26,7 +22,6 @@ class NewsAdapter(val onItemClick:(objectArticleInfo : ObjectArticleInfo, positi
                 onItemClick.invoke(objectArticleInfo, adapterPosition)
             }
 
-            binding
         }
     }
 
@@ -45,7 +40,7 @@ class NewsAdapter(val onItemClick:(objectArticleInfo : ObjectArticleInfo, positi
             return oldItem.url == newItem.url && oldItem.content == newItem.content
         }
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsAdapter.NewsHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
         return NewsHolder(NewListItemBinding.inflate(LayoutInflater.from(parent.context)),onItemClick)
     }
     override fun onBindViewHolder(holder: NewsHolder, position: Int) {

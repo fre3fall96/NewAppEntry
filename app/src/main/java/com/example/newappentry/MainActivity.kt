@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main)  {
     private lateinit var navController: NavController
 
@@ -19,6 +22,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main)  {
         // Set up the action bar for use with the NavController
         setupActionBarWithNavController(navController)
         navController.enableOnBackPressed(true)
+        supportActionBar?.setTitle("Latest News")
     }
 
     override fun onSupportNavigateUp(): Boolean {

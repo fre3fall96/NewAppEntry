@@ -8,9 +8,7 @@ import android.os.Bundle
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -34,7 +32,6 @@ class NewsDetailFragment: Fragment() {
         }
         startActivity(sendIntent)
     }
-
     fun createHyperlink(
         text: String,
         phrase: String,
