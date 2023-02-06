@@ -3,7 +3,6 @@ package com.example.newappentry.overview
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.*
 import android.text.method.LinkMovementMethod
@@ -11,7 +10,6 @@ import android.text.style.ClickableSpan
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import coil.load
@@ -20,10 +18,11 @@ import com.example.newappentry.databinding.FragmentNewsDetailsBinding
 import java.text.SimpleDateFormat
 
 class NewsDetailFragment: Fragment() {
-
+    //private lateinit var binding :FragmentNewsDetailsBinding
     private var binding : FragmentNewsDetailsBinding? = null
 
     fun shareContent(){
+
         val formattedText = "News: "+binding?.contentDetails?.text+" By : "+binding?.authorDetails?.text
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
@@ -58,16 +57,14 @@ class NewsDetailFragment: Fragment() {
         return spannableString
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val fragmentBinding = FragmentNewsDetailsBinding.inflate(inflater, container, false)
-        binding = fragmentBinding
+
         //loading of bundle
-        println(this.arguments?.getString("body"))
         val newsTitle:TextView = fragmentBinding.titleDetails
         newsTitle.setText(this.arguments?.getString(("title")))
 

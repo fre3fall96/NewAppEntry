@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OverviewFragment : Fragment(){
-
+    //used to initialise the viewmodel
     private val viewModel: OverviewViewModel by viewModels()
 
     override fun onCreateView(
@@ -21,12 +21,17 @@ class OverviewFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //this binds the code to the view
         val binding = FragmentOverviewBinding.inflate(inflater)
 
+
+
+        //used for observing lifedata with data binding
         binding.lifecycleOwner = this
 
         binding.viewModel = viewModel
-        binding.newsLayout.adapter = NewsAdapter({article, position ->
+        binding.newsLayout.adapter = NewsAdapter{
+                article, position ->
             Log.i("SSS", " "+position + " " + article.title)
             // create a new NewsDetail Fragment
             val newsDetail = NewsDetailFragment()
@@ -36,8 +41,18 @@ class OverviewFragment : Fragment(){
             //this replace whatever that is inside overviewFragment with the new fragment
             this.activity?.supportFragmentManager?.beginTransaction()?.
             replace(R.id.overviewFragment, newsDetail)?.addToBackStack(null)?.commit()
-        })
+
+        }
+
+        val test = binding.searchBar
+
+        test.setOnClickListener{
+            test
+        }
+
+
 
         return binding.root
     }
+
 }

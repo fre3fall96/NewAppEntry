@@ -42,4 +42,9 @@ class OverviewViewModel @Inject constructor(private val repository: Repository) 
             }
         }
     }
+
+    fun searchArticle(){
+        //val searchTextView : TextView = view.findViewById<EditText>(R.id.search_bar)
+    }
+
 }

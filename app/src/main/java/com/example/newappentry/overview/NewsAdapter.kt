@@ -5,17 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newappentry.databinding.NewListItemBinding
+import com.example.newappentry.databinding.NewsListItemBinding
 import com.example.newappentry.network.ObjectArticleInfo
 
 class NewsAdapter (val onItemClick:(objectArticleInfo : ObjectArticleInfo, position:Int)->Unit) : ListAdapter<ObjectArticleInfo, NewsAdapter.NewsHolder>(
-    DiffCallBack
-) {
+DiffCallBack) {
 
-    class NewsHolder(private var binding: NewListItemBinding, val onItemClick:(objectArticleInfo : ObjectArticleInfo,position:Int)->Unit):RecyclerView.ViewHolder(binding.root){
+    class NewsHolder(private var binding: NewsListItemBinding, val onItemClick:(objectArticleInfo : ObjectArticleInfo,position:Int)->Unit):RecyclerView.ViewHolder(binding.root){
         fun bind(objectArticleInfo : ObjectArticleInfo){
             binding.newsObject = objectArticleInfo
             binding.executePendingBindings()
+            binding.newsImage.setOnClickListener {
+                onItemClick.invoke(objectArticleInfo, adapterPosition)
+            }
 
             binding.newsConstraint.setOnClickListener {
                 // go
@@ -41,10 +43,11 @@ class NewsAdapter (val onItemClick:(objectArticleInfo : ObjectArticleInfo, posit
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
-        return NewsHolder(NewListItemBinding.inflate(LayoutInflater.from(parent.context)),onItemClick)
+        return NewsHolder(NewsListItemBinding.inflate(LayoutInflater.from(parent.context)),onItemClick)
     }
     override fun onBindViewHolder(holder: NewsHolder, position: Int) {
         val newsItem = getItem(position)
         holder.bind(newsItem)
     }
+
 }
