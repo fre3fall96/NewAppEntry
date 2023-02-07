@@ -15,10 +15,6 @@ DiffCallBack) {
         fun bind(objectArticleInfo : ObjectArticleInfo){
             binding.newsObject = objectArticleInfo
             binding.executePendingBindings()
-            binding.newsImage.setOnClickListener {
-                onItemClick.invoke(objectArticleInfo, adapterPosition)
-            }
-
             binding.newsConstraint.setOnClickListener {
                 // go
                 onItemClick.invoke(objectArticleInfo, adapterPosition)
@@ -42,6 +38,7 @@ DiffCallBack) {
             return oldItem.url == newItem.url && oldItem.content == newItem.content
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
         return NewsHolder(NewsListItemBinding.inflate(LayoutInflater.from(parent.context)),onItemClick)
     }

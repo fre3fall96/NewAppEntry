@@ -33,7 +33,7 @@
         android:layout_height="match_parent"
         tools:context="com.example.newappentry.overview.OverViewFragment"
         >
-
+        
         <EditText
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
@@ -43,22 +43,21 @@
             android:hint="Search for latest news"
             />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/news_layout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:padding="6dp"
-            android:clipToPadding="false"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:listData = "@{viewModel.news}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_bar"
-            tools:listitem="@layout/news_list_item"
-            android:clickable="true"
-            app:spanCount="1"
-            tools:itemCount="16"
-            />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/news_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="3dp"
+                android:clipToPadding="false"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:listData = "@{viewModel.news}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_bar"
+                tools:listitem="@layout/news_list_item"
+                android:clickable="true"
+                app:spanCount="1"
+                />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -99,13 +99,13 @@ class NewsDetailFragment: Fragment() {
         }
 
         val dateTimeFormatting = this.arguments?.getString("published")
-
+/*
         val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(dateTimeFormatting)
         val formatter = SimpleDateFormat("dd-MMM-yyyy HH:mm")
         val dt = formatter.format(date)
-
+*/
         val newsPublishedAt:TextView = fragmentBinding.publishedAtDetails
-        newsPublishedAt.setText("Published on: " + dt.toString())
+        newsPublishedAt.setText(dateTimeFormatting)
 
         return fragmentBinding.root
     }
