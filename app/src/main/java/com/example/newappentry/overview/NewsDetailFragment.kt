@@ -1,6 +1,7 @@
 package com.example.newappentry.overview
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -9,6 +10,7 @@ import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.*
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -17,6 +19,7 @@ import androidx.fragment.app.Fragment
 import coil.load
 import com.example.newappentry.R
 import com.example.newappentry.databinding.FragmentNewsDetailsBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 
 class NewsDetailFragment: Fragment() {
@@ -92,13 +95,17 @@ class NewsDetailFragment: Fragment() {
         }
         val newsAuthor:TextView = fragmentBinding.authorDetails
         if (this.arguments?.getString("author") != null){
-            newsAuthor.setText("Author: "+this.arguments?.getString(("author")))
+            newsAuthor.setText("Published by: "+this.arguments?.getString(("author")))
         }else{
             fragmentBinding.authorDetails.visibility = View.GONE
         }
         val dateTimeFormatting = this.arguments?.getString("published")
         val newsPublishedAt:TextView = fragmentBinding.publishedAtDetails
         newsPublishedAt.setText(dateTimeFormatting)
+
+        val fab : FloatingActionButton = fragmentBinding.shareButtonDetails
+        fab.imageTintList = ColorStateList.valueOf(Color.WHITE)
+
         return fragmentBinding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -31,17 +31,22 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.newappentry.overview.OverViewFragment"
-        >
+        tools:context="com.example.newappentry.overview.OverViewFragment">
         
-        <EditText
+        <SearchView
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:padding="5dp"
+            android:queryBackground="@android:color/transparent"
+            android:layout_height="50dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/news_layout"
             android:hint="Search for latest news"
-            />
+            android:iconifiedByDefault="false"
+            android:queryHint="Search for latest news"
+            android:background="@drawable/rounded_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="10dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/news_layout"

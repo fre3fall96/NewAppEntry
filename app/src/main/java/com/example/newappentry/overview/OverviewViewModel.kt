@@ -47,7 +47,8 @@ class OverviewViewModel @Inject constructor(private val repository: Repository) 
                 for(i in 0..(allResults.size)-1){
 
                     val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(allResults.get(i).publishedAt)
-                    val formatter = SimpleDateFormat("dd-MMM-yyyy HH:mm")
+                    val formatter = SimpleDateFormat("EEEE, dd-MMM-yyyy")
+                    // val formatter = SimpleDateFormat("EEEE dd-MMM-yyyy HH:mm")
                     val dt = formatter.format(date)
                     allResults.get(i).publishedAt = dt
                     filteredList.add(allResults.get(i))
@@ -60,7 +61,7 @@ class OverviewViewModel @Inject constructor(private val repository: Repository) 
         }
     }
 
-    fun searchArticle(query : CharSequence){
+    fun searchArticle(query : String?){
         //   var results = news.value!!.filter {
         var search : String = query.toString()
         var filteredList = ArrayList<ObjectArticleInfo>()

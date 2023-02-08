@@ -48,7 +48,20 @@ class OverviewFragment : Fragment(){
 
         }
 
+        binding.searchBar.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.searchArticle(query)
+                return false
+            }
 
+            override fun onQueryTextChange(query: String?): Boolean {
+                viewModel.searchArticle(query)
+                return false
+            }
+
+        })
+
+/*
         binding.searchBar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -60,6 +73,8 @@ class OverviewFragment : Fragment(){
                 viewModel.searchArticle(s)
             }
         })
+
+ */
 
         return binding.root
     }
