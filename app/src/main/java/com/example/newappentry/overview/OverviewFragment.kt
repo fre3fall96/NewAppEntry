@@ -1,24 +1,21 @@
 package com.example.newappentry.overview
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.SearchView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newappentry.R
 import com.example.newappentry.databinding.FragmentOverviewBinding
+import com.example.newappentry.network.ButtonList
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
 
 @AndroidEntryPoint
 class OverviewFragment : Fragment(){
+
     //used to initialise the viewmodel
     private val viewModel: OverviewViewModel by viewModels()
 
@@ -47,6 +44,9 @@ class OverviewFragment : Fragment(){
             replace(R.id.overviewFragment, newsDetail)?.addToBackStack(null)?.commit()
 
         }
+
+        binding.filterRecycleview.layoutManager = LinearLayoutManager(this.activity?.applicationContext, LinearLayoutManager.HORIZONTAL, false)
+        binding.filterRecycleview.adapter = FilterAdapter(requireActivity()!!.applicationContext, viewModel.fetchList())
 
         binding.searchBar.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {

@@ -1,11 +1,12 @@
 package com.example.newappentry.network
 
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface newsApiService {
     //this is a get request that will be appended to the end of the base url
-    @GET("everything?q=Apple&from=2023-01-26&sortBy=popularity&apiKey=b6382435cc9442d092e3697aa619e98a")
-    suspend fun getNews():ObjectNewsInfo
+    @GET("everything?from=2023-01-26&sortBy=popularity&apiKey=b6382435cc9442d092e3697aa619e98a")
+    suspend fun getNews(@Query("q") id:String):ObjectNewsInfo
 }
 
 /*

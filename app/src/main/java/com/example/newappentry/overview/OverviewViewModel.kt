@@ -1,5 +1,6 @@
 package com.example.newappentry.overview
 
+import android.graphics.ColorSpace
 import android.os.Bundle
 import android.provider.Contacts
 import android.util.Log
@@ -7,6 +8,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.*
 import com.example.newappentry.R
+import com.example.newappentry.network.ButtonList
 import com.example.newappentry.network.ObjectArticleInfo
 import com.example.newappentry.network.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,9 +23,10 @@ class OverviewViewModel @Inject constructor(private val repository: Repository) 
     private var _news = MutableLiveData<List<ObjectArticleInfo>>()
     val news: LiveData<List<ObjectArticleInfo>> =_news
     val staticNews = news
+    val categories : List<String> = listOf("Apple","Tesla","Finance","Google","Singapore")
 
     init {
-        getNewsArticle()
+        getNewsArticle("Google")
     }
 
     fun prepareBundle(articleInfo : ObjectArticleInfo): Bundle {
@@ -37,11 +40,12 @@ class OverviewViewModel @Inject constructor(private val repository: Repository) 
         return newsBundle
     }
 
-    private fun getNewsArticle(){
+    fun getNewsArticle(category:String){
+        Log.d("thisthis", "clickeddddd")
         viewModelScope.launch{
             var newsInfo =
             try{
-                allResults = repository.getNews().articles
+                allResults = repository.getNews(category).articles
                 var filteredList = ArrayList<ObjectArticleInfo>()
 
                 for(i in 0..(allResults.size)-1){
@@ -73,5 +77,14 @@ class OverviewViewModel @Inject constructor(private val repository: Repository) 
         _news.value = filteredList
     }
 
+    fun fetchList(): ArrayList<ButtonList> {
+        val list = arrayListOf<ButtonList>()
+
+        for (i in categories) {
+            val model = ButtonList(i)
+            list.add(model)
+        }
+        return list
+    }
 
 }
