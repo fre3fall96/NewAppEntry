@@ -11,8 +11,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main)  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         supportActionBar?.hide()
-        supportActionBar?.setTitle("Latest News")
 
         //this code is to set up the back button in the actionbar(bar at the top of the screen)
         // Retrieve NavController from the NavHostFragment

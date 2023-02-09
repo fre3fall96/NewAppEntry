@@ -14,8 +14,12 @@ import com.example.newappentry.network.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 import java.util.Locale.filter
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @HiltViewModel
 class OverviewViewModel @Inject constructor(private val repository: Repository) : ViewModel(){
@@ -24,9 +28,12 @@ class OverviewViewModel @Inject constructor(private val repository: Repository) 
     val news: LiveData<List<ObjectArticleInfo>> =_news
     val staticNews = news
     val categories : List<String> = listOf("Apple","Tesla","Finance","Google","Singapore")
+    var filterType : String = "publishedAt"
+    var currentSearch : String = "Apple"
+    var currentDate = getTodayDate()
 
     init {
-        getNewsArticle("Google")
+        getNewsArticle("Google", "publishedAt", currentDate)
     }
 
     fun prepareBundle(articleInfo : ObjectArticleInfo): Bundle {
@@ -40,12 +47,12 @@ class OverviewViewModel @Inject constructor(private val repository: Repository) 
         return newsBundle
     }
 
-    fun getNewsArticle(category:String){
+    fun getNewsArticle(category:String, sortby:String, currentDate:String){
         Log.d("thisthis", "clickeddddd")
         viewModelScope.launch{
             var newsInfo =
             try{
-                allResults = repository.getNews(category).articles
+                allResults = repository.getNews(category, sortby, currentDate).articles
                 var filteredList = ArrayList<ObjectArticleInfo>()
 
                 for(i in 0..(allResults.size)-1){
@@ -85,6 +92,12 @@ class OverviewViewModel @Inject constructor(private val repository: Repository) 
             list.add(model)
         }
         return list
+    }
+
+    fun getTodayDate(): String{
+        val formatter = SimpleDateFormat("yyyy-MM-dd")
+        val current = formatter.format(Calendar.getInstance().time)
+        return current
     }
 
 }
