@@ -9,7 +9,7 @@ data class ObjectArticleInfo(val author: String?,
                              val description: String?,
                              val url: String,
                              val urlToImage: String?,
-                             val publishedAt: String,
+                             var publishedAt: String,
                              val content: String)
 
 //the shallowest list that contains all the articles
