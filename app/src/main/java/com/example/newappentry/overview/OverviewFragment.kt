@@ -96,6 +96,7 @@ class OverviewFragment : Fragment() {
             LinearLayoutManager.HORIZONTAL,
             false
         )
+
         binding.RVFilterButtonOptions.adapter = FilterAdapter(viewModel.fetchList(), {
             viewModel.currentSearch = it
             viewModel.getNewsArticle(it, viewModel.filterType, viewModel.getTodayDate())

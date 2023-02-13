@@ -1,6 +1,6 @@
 package com.example.newappentry.di
 
-import com.example.newappentry.network.newsApiService
+import com.example.newappentry.network.NewsApiService
 import com.example.newappentry.network.repository.Repository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -32,9 +32,9 @@ object APIModule {
 
     @Singleton
     @Provides
-    fun providesAPIService(retrofit: Retrofit) : newsApiService = retrofit.create(newsApiService::class.java)
+    fun providesAPIService(retrofit: Retrofit) : NewsApiService = retrofit.create(NewsApiService::class.java)
 
     @Singleton
     @Provides
-    fun providesRepository(newsApiService: newsApiService) = Repository(newsApiService)
+    fun providesRepository(newsApiService: NewsApiService) = Repository(newsApiService)
 }
