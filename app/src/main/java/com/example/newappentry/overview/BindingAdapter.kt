@@ -6,7 +6,6 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.newappentry.R
-import com.example.newappentry.network.ButtonList
 import com.example.newappentry.network.ObjectArticleInfo
 
 //this binding adapters uses nullable parameter

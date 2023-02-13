@@ -6,20 +6,63 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.SearchView
-import android.widget.TextView
+import androidx.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.newappentry.Constant
 import com.example.newappentry.R
 import com.example.newappentry.databinding.FragmentOverviewBinding
-import com.example.newappentry.network.ButtonList
 import dagger.hilt.android.AndroidEntryPoint
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import nl.bryanderidder.themedtogglebuttongroup.ThemedButton
 
 
 @AndroidEntryPoint
-class OverviewFragment : Fragment(){
+class OverviewFragment : Fragment() {
+
+    fun initBottomSheet(view: View, dialog: BottomSheetDialog, binding: FragmentOverviewBinding) {
+        val latestBT = view.findViewById<ThemedButton>(R.id.BT_sortbyLatest)
+        val relBT = view.findViewById<ThemedButton>(R.id.BT_sortbyRelevancy)
+        val popBT = view.findViewById<ThemedButton>(R.id.BT_sortbyPopularity)
+        val saveBT = view.findViewById<Button>(R.id.BT_saveSelection)
+        val resetBT = view.findViewById<Button>(R.id.BT_resetSelection)
+
+
+        latestBT.setOnClickListener {
+            viewModel.filterType = Constant.LATEST
+        }
+        relBT.setOnClickListener {
+            viewModel.filterType = Constant.RELEVANCY
+        }
+        popBT.setOnClickListener {
+            viewModel.filterType = Constant.POPULARITY
+        }
+        saveBT.setOnClickListener {
+            viewModel.getNewsArticle(
+                viewModel.currentSearch,
+                viewModel.filterType,
+                viewModel.getTodayDate()
+            )
+            binding.RVNewsListing.smoothScrollToPosition(0)
+            dialog.dismiss()
+            binding.BTFilter.setBackground(resources.getDrawable(R.drawable.button_design))
+
+        }
+
+        resetBT.setOnClickListener {
+            viewModel.filterType = Constant.LATEST
+            viewModel.getNewsArticle(
+                viewModel.currentSearch,
+                viewModel.filterType,
+                viewModel.getTodayDate()
+            )
+            binding.RVNewsListing.smoothScrollToPosition(0)
+            dialog.dismiss()
+            binding.BTFilter.setBackground(resources.getDrawable(R.drawable.button_design))
+
+        }
+    }
 
     //used to initialise the viewmodel
     private val viewModel: OverviewViewModel by viewModels()
@@ -35,28 +78,30 @@ class OverviewFragment : Fragment(){
         //used for observing lifedata with data binding
         binding.lifecycleOwner = this
 
-        binding.viewModel = viewModel
-        binding.newsLayout.adapter = NewsAdapter{
-                article, position ->
-            //Log.i("SSS", " "+position + " " + article.title)
+        binding.dbOverviewViewModel = viewModel
+        binding.RVNewsListing.adapter = NewsAdapter { article, position ->
             // create a new NewsDetail Fragment
             val newsDetail = NewsDetailFragment()
             //add arguments to the bundle
             newsDetail.arguments = viewModel.prepareBundle(article)
             //omg this took so long to understand
             //this replace whatever that is inside overviewFragment with the new fragment
-            this.activity?.supportFragmentManager?.beginTransaction()?.
-            replace(R.id.overviewFragment, newsDetail)?.addToBackStack(null)?.commit()
+            this.activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.overviewFragment, newsDetail)?.addToBackStack(null)?.commit()
 
         }
 
-        binding.filterRecycleview.layoutManager = LinearLayoutManager(this.activity?.applicationContext, LinearLayoutManager.HORIZONTAL, false)
-        binding.filterRecycleview.adapter = FilterAdapter(viewModel.fetchList(),{
+        binding.RVFilterButtonOptions.layoutManager = LinearLayoutManager(
+            this.activity?.applicationContext,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+        binding.RVFilterButtonOptions.adapter = FilterAdapter(viewModel.fetchList(), {
             viewModel.currentSearch = it
             viewModel.getNewsArticle(it, viewModel.filterType, viewModel.getTodayDate())
         })
 
-        binding.searchBar.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+        binding.SVSearchbar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.searchArticle(query)
                 return false
@@ -69,53 +114,19 @@ class OverviewFragment : Fragment(){
 
         })
 
-
-        binding.filterButton.setOnClickListener{
-            println("hello")
+        binding.BTFilter.setOnClickListener {
+            binding.BTFilter.setBackground(resources.getDrawable(R.drawable.button_design_red))
             val dialog = BottomSheetDialog(this.requireContext())
 
             val view = layoutInflater.inflate(R.layout.bottom_sheet_filter, null)
 
-            val latestBT = view.findViewById<ThemedButton>(R.id.latestBT)
-            val relBT = view.findViewById<ThemedButton>(R.id.relevancyBT)
-            val popBT = view.findViewById<ThemedButton>(R.id.popularityBT)
-            val saveBT = view.findViewById<Button>(R.id.saveBT)
-
-            latestBT.setOnClickListener{
-                viewModel.filterType = "publishedAt"
-            }
-            relBT.setOnClickListener{
-                viewModel.filterType = "relevancy"
-            }
-            popBT.setOnClickListener{
-                viewModel.filterType = "popularity"
-            }
-            saveBT.setOnClickListener{
-                viewModel.getNewsArticle(viewModel.currentSearch, viewModel.filterType, viewModel.getTodayDate())
-                dialog.dismiss()
-            }
+            initBottomSheet(view, dialog, binding)
 
             dialog.setContentView(view)
 
             dialog.show()
 
         }
-
-
-/*
-        binding.searchBar.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                viewModel.searchArticle(s)
-            }
-        })
-
- */
 
         return binding.root
     }

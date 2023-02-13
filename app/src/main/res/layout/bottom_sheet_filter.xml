@@ -10,9 +10,8 @@
         android:layout_height="230dp"
         android:layout_margin="20dp">
 
-        <!--text view for displaying course name-->
         <TextView
-            android:id="@+id/filterTV"
+            android:id="@+id/TV_filterText"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             app:layout_constraintTop_toTopOf="parent"
@@ -22,15 +21,25 @@
             android:textSize="28sp"
             android:textStyle="bold" />
 
-        <!--text view for displaying course tracks-->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/BT_resetSelection"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/button_design"
+            android:text="Reset"
+            android:drawableLeft="@drawable/trash_button_modification"
+            />
+
         <TextView
-            android:id="@+id/sortByTV"
+            android:id="@+id/TV_sortbyText"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/filterTV"
+            app:layout_constraintTop_toBottomOf="@id/TV_filterText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/buttonGroup"
+            app:layout_constraintBottom_toTopOf="@id/filterButtonGroup"
             android:text="Sort By"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -38,47 +47,55 @@
             android:paddingTop="20dp"/>
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
-            android:id="@+id/buttonGroup"
+            android:id="@+id/filterButtonGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/sortByTV"
+            app:layout_constraintTop_toBottomOf="@id/TV_sortbyText"
             android:paddingLeft="5dp"
-            app:justifyContent="flex_start"> <!-- this attribute is from the underlying FlexboxLayout -->
+            app:justifyContent="flex_start">
 
             <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-                android:id="@+id/latestBT"
+                android:id="@+id/BT_sortbyLatest"
                 android:layout_width="wrap_content"
-                android:layout_height="38dp"
+                android:layout_height="@dimen/ThemeBT_height"
                 app:toggle_selectedBackgroundColor="@color/themedColour"
+                app:toggle_backgroundColor="@color/white"
+                app:toggle_borderColor="@color/semiTransparentColor"
+                app:toggle_borderWidth="5dp"
                 app:toggle_text="Latest" />
 
             <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-                android:id="@+id/relevancyBT"
+                android:id="@+id/BT_sortbyRelevancy"
                 android:layout_width="wrap_content"
-                android:layout_height="38dp"
+                android:layout_height="@dimen/ThemeBT_height"
                 app:toggle_selectedBackgroundColor="@color/themedColour"
+                app:toggle_backgroundColor="@color/white"
+                app:toggle_borderColor="@color/semiTransparentColor"
+                app:toggle_borderWidth="5dp"
                 app:toggle_text="Relevancy" />
 
             <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-                android:id="@+id/popularityBT"
+                android:id="@+id/BT_sortbyPopularity"
                 android:layout_width="wrap_content"
-                android:layout_height="38dp"
+                android:layout_height="@dimen/ThemeBT_height"
                 app:toggle_selectedBackgroundColor="@color/themedColour"
+                app:toggle_backgroundColor="@color/white"
+                app:toggle_borderColor="@color/semiTransparentColor"
+                app:toggle_borderWidth="5dp"
                 app:toggle_text="Popularity" />
 
         </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
 
-        <!--button for dismissing our dialog-->
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/saveBT"
+            android:id="@+id/BT_saveSelection"
             android:layout_width="match_parent"
-            android:layout_height="38dp"
+            android:layout_height="@dimen/ThemeBT_height"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="10dp"
             android:text="Save"
             android:background="@drawable/button_design_red"
             android:textColor="@color/white"
-            android:textSize="18dp"
+            android:textSize="@dimen/BT_textSize"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

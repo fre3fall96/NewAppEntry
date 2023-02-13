@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">NewAppEntry</string>
     <string name="news_title">Hello!</string>
+    <string name="sort_latest">publishedAt</string>
+    <string name="sort_relevancy">relevancy</string>
+    <string name="sort_popularity">popularity</string>
 
 </resources>

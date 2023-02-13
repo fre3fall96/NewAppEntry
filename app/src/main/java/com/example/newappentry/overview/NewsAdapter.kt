@@ -13,9 +13,9 @@ DiffCallBack) {
 
     class NewsHolder(private var binding: NewsListItemBinding, val onItemClick:(objectArticleInfo : ObjectArticleInfo,position:Int)->Unit):RecyclerView.ViewHolder(binding.root){
         fun bind(objectArticleInfo : ObjectArticleInfo){
-            binding.newsObject = objectArticleInfo
+            binding.dbObjectArticleInfo = objectArticleInfo
             binding.executePendingBindings()
-            binding.newsConstraint.setOnClickListener {
+            binding.CLayoutListingFormating.setOnClickListener {
                 // go
                 onItemClick.invoke(objectArticleInfo, adapterPosition)
             }

@@ -7,13 +7,12 @@
     android:paddingTop="10dp">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/filter_button"
+        android:id="@+id/BT_filterOptions"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textColor="@color/black"
-        android:background="@drawable/button_design"
-        />
+        android:background="@drawable/button_design" />
 
 </FrameLayout>

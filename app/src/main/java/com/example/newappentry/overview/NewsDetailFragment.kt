@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import coil.load
+import com.example.newappentry.Constant
 import com.example.newappentry.R
 import com.example.newappentry.databinding.FragmentNewsDetailsBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -27,7 +28,7 @@ class NewsDetailFragment: Fragment() {
     private var binding : FragmentNewsDetailsBinding? = null
 
     fun shareContent(){
-        val formattedText = "News: "+binding?.contentDetails?.text+" By : "+binding?.authorDetails?.text
+        val formattedText = "News: "+binding?.TVNewsContent?.text+" By : "+binding?.TVAuthorName?.text
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, formattedText)
@@ -61,7 +62,6 @@ class NewsDetailFragment: Fragment() {
         )
         return spannableString
     }
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,15 +70,14 @@ class NewsDetailFragment: Fragment() {
         val fragmentBinding = FragmentNewsDetailsBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         //loading of bundle
-        println(this.arguments?.getString("body"))
-        val newsTitle:TextView = fragmentBinding.titleDetails
-        newsTitle.setText(this.arguments?.getString(("title")))
-        var newsContentString:String? = this.arguments?.getString(("content"))
-        val newsContent:TextView = fragmentBinding.contentDetails
+        val newsTitle:TextView = fragmentBinding.TVTitle
+        newsTitle.setText(this.arguments?.getString((Constant.TITLE)))
+        var newsContentString:String? = this.arguments?.getString((Constant.CONTENT))
+        val newsContent:TextView = fragmentBinding.TVNewsContent
         if(newsContentString?.length!!>200){
             newsContentString = newsContentString.substring(0,200) + " See more"
             val spannableContent = createHyperlink(newsContentString,"See more", Color.BLUE, View.OnClickListener{
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(this.arguments?.getString("urlToNews")))
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(this.arguments?.getString(Constant.URL_TO_NEWS)))
                 startActivity(browserIntent)})
             newsContent.movementMethod = LinkMovementMethod.getInstance()
             newsContent.setText(spannableContent, TextView.BufferType.SPANNABLE)
@@ -86,24 +85,24 @@ class NewsDetailFragment: Fragment() {
             newsContentString = newsContentString + " See more"
             newsContent.setText(newsContentString)
         }
-        val newsImage:ImageView = fragmentBinding.newsImageDetails
-        val imgUrl = this.arguments?.getString(("url"))?.toUri()
+        val newsImage:ImageView = fragmentBinding.IVNewsImage
+        val imgUrl = this.arguments?.getString((Constant.URL))?.toUri()
         if (imgUrl!=null){
             newsImage.load(imgUrl)
         }else{
             newsImage.setImageResource(R.drawable.ic_broken_image)
         }
-        val newsAuthor:TextView = fragmentBinding.authorDetails
-        if (this.arguments?.getString("author") != null){
-            newsAuthor.setText("Published by: "+this.arguments?.getString(("author")))
+        val newsAuthor:TextView = fragmentBinding.TVAuthorName
+        if (this.arguments?.getString(Constant.AUTHOR) != null){
+            newsAuthor.setText("Published by: "+this.arguments?.getString((Constant.AUTHOR)))
         }else{
-            fragmentBinding.authorDetails.visibility = View.GONE
+            fragmentBinding.TVAuthorName.visibility = View.GONE
         }
-        val dateTimeFormatting = this.arguments?.getString("published")
-        val newsPublishedAt:TextView = fragmentBinding.publishedAtDetails
+        val dateTimeFormatting = this.arguments?.getString(Constant.PUBLISH)
+        val newsPublishedAt:TextView = fragmentBinding.TVNewsDate
         newsPublishedAt.setText(dateTimeFormatting)
 
-        val fab : FloatingActionButton = fragmentBinding.shareButtonDetails
+        val fab : FloatingActionButton = fragmentBinding.FABShareNews
         fab.imageTintList = ColorStateList.valueOf(Color.WHITE)
 
         return fragmentBinding.root
@@ -111,7 +110,7 @@ class NewsDetailFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //updating textview
-        binding?.newsDetailFragment = this
+        binding?.dbNewsDetailFragment = this
     }
     override fun onDestroyView() {
         super.onDestroyView()

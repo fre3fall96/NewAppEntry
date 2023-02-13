@@ -6,69 +6,53 @@
 
     <data>
         <variable
-            name="newsObject"
+            name="DB_ObjectArticleInfo"
             type="com.example.newappentry.network.ObjectArticleInfo" />
 
         <variable
-            name="navtest"
+            name="DB_OverviewFragment"
             type="com.example.newappentry.overview.OverviewFragment" />
 
-        <variable
-            name="vm"
-            type="com.example.newappentry.overview.OverviewViewModel" />
-    </data>
+        </data>
 
     <FrameLayout
+        android:id="@+id/Layout_newsListing"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/news_constraint"
+                android:id="@+id/CLayout_listingFormating"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="@drawable/rounded_bg"
                 android:clipToOutline="true"
                 android:clickable="true"
-                android:onClick="@{()->navtest}"
+                android:onClick="@{()->DB_OverviewFragment}"
                 tools:context="com.example.newappentry.overview.OverViewFragment">
 
-                <TextView
-                    android:id="@+id/news_item"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:paddingLeft="10dp"
-                    android:paddingBottom="5dp"
-                    android:text="@{newsObject.title}"
-                    android:textSize="18dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/news_image" />
-
                 <ImageView
-                    android:id="@+id/news_image"
+                    android:id="@+id/IV_newsListingImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
                     android:contentDescription="Image for news"
                     android:scaleType="centerCrop"
                     android:tintMode="src_atop"
-                    app:imageUrl="@{newsObject.urlToImage}"
+                    app:imageUrl="@{DB_ObjectArticleInfo.urlToImage}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:tint="#6F000000" />
 
                 <TextView
-                    android:id="@+id/title"
+                    android:id="@+id/TV_newsListingTitle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:paddingLeft="10dp"
                     android:paddingTop="10dp"
-                    android:text="@{newsObject.title}"
+                    android:text="@{DB_ObjectArticleInfo.title}"
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -76,25 +60,27 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/authorName"
+                    android:id="@+id/TV_newsListingAuthorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:paddingBottom="10dp"
-                    android:text="@{newsObject.author}"
+                    android:text="@{DB_ObjectArticleInfo.author}"
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:maxWidth="140dp"
+                    android:ellipsize="end"/>
 
                 <TextView
-                    android:id="@+id/nl_date"
+                    android:id="@+id/TV_newsListingDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
-                    android:text="@{newsObject.publishedAt}"
+                    android:text="@{DB_ObjectArticleInfo.publishedAt}"
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold"

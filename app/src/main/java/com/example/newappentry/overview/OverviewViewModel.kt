@@ -1,23 +1,16 @@
 package com.example.newappentry.overview
 
-import android.graphics.ColorSpace
 import android.os.Bundle
-import android.provider.Contacts
 import android.util.Log
-import android.widget.EditText
-import android.widget.TextView
 import androidx.lifecycle.*
-import com.example.newappentry.R
-import com.example.newappentry.network.ButtonList
+import com.example.newappentry.Constant
+import com.example.newappentry.network.FilterButton
 import com.example.newappentry.network.ObjectArticleInfo
 import com.example.newappentry.network.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.Locale.filter
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
@@ -28,27 +21,26 @@ class OverviewViewModel @Inject constructor(private val repository: Repository) 
     val news: LiveData<List<ObjectArticleInfo>> =_news
     val staticNews = news
     val categories : List<String> = listOf("Apple","Tesla","Finance","Google","Singapore")
-    var filterType : String = "publishedAt"
-    var currentSearch : String = "Apple"
+    var filterType : String = Constant.LATEST
+    var currentSearch : String = Constant.DEFAULT_SEARCH
     var currentDate = getTodayDate()
 
     init {
-        getNewsArticle("Google", "publishedAt", currentDate)
+        getNewsArticle(Constant.DEFAULT_SEARCH, Constant.LATEST, currentDate)
     }
 
     fun prepareBundle(articleInfo : ObjectArticleInfo): Bundle {
         val newsBundle = Bundle()
-        newsBundle.putString("title", articleInfo.title)
-        newsBundle.putString("content", articleInfo.content)
-        newsBundle.putString("url", articleInfo.urlToImage)
-        newsBundle.putString("author", articleInfo.author)
-        newsBundle.putString("published", articleInfo.publishedAt)
-        newsBundle.putString("urlToNews", articleInfo.url)
+        newsBundle.putString(Constant.TITLE, articleInfo.title)
+        newsBundle.putString(Constant.CONTENT, articleInfo.content)
+        newsBundle.putString(Constant.URL, articleInfo.urlToImage)
+        newsBundle.putString(Constant.AUTHOR, articleInfo.author)
+        newsBundle.putString(Constant.PUBLISH, articleInfo.publishedAt)
+        newsBundle.putString(Constant.URL_TO_NEWS, articleInfo.url)
         return newsBundle
     }
 
     fun getNewsArticle(category:String, sortby:String, currentDate:String){
-        Log.d("thisthis", "clickeddddd")
         viewModelScope.launch{
             var newsInfo =
             try{
@@ -84,11 +76,11 @@ class OverviewViewModel @Inject constructor(private val repository: Repository) 
         _news.value = filteredList
     }
 
-    fun fetchList(): ArrayList<ButtonList> {
-        val list = arrayListOf<ButtonList>()
+    fun fetchList(): ArrayList<FilterButton> {
+        val list = arrayListOf<FilterButton>()
 
         for (i in categories) {
-            val model = ButtonList(i)
+            val model = FilterButton(i)
             list.add(model)
         }
         return list

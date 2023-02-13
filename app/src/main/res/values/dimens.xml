@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_radius">20dp</dimen>
+    <dimen name="dialog_radius">16dp</dimen>
+    <dimen name="bg_radius">25dp</dimen>
+    <dimen name="BT_textSize">18sp</dimen>
+    <dimen name="ThemeBT_height">38dp</dimen>
+
+</resources>
