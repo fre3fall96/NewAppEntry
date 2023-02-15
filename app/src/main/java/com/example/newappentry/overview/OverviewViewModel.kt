@@ -16,7 +16,7 @@ import kotlin.collections.ArrayList
 
 @HiltViewModel
 class OverviewViewModel @Inject constructor(private val repository: Repository) : ViewModel(){
-    lateinit var allResults : List<ObjectArticleInfo>
+    var allResults : List<ObjectArticleInfo>? = null
     private var _news = MutableLiveData<List<ObjectArticleInfo>>()
     val news: LiveData<List<ObjectArticleInfo>> =_news
     val staticNews = news
@@ -47,14 +47,14 @@ class OverviewViewModel @Inject constructor(private val repository: Repository) 
                 allResults = repository.getNews(category, sortby, currentDate).articles
                 var filteredList = ArrayList<ObjectArticleInfo>()
 
-                for(i in 0..(allResults.size)-1){
+                for(i in 0..(allResults!!.size)-1){
 
-                    val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(allResults.get(i).publishedAt)
+                    val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(allResults!!.get(i).publishedAt)
                     val formatter = SimpleDateFormat("EEEE, dd-MMM-yyyy")
                     // val formatter = SimpleDateFormat("EEEE dd-MMM-yyyy HH:mm")
                     val dt = formatter.format(date)
-                    allResults.get(i).publishedAt = dt
-                    filteredList.add(allResults.get(i))
+                    allResults!!.get(i).publishedAt = dt
+                    filteredList.add(allResults!!.get(i))
                 }
 
                 _news.value = filteredList
@@ -68,12 +68,17 @@ class OverviewViewModel @Inject constructor(private val repository: Repository) 
         //   var results = news.value!!.filter {
         var search : String = query.toString()
         var filteredList = ArrayList<ObjectArticleInfo>()
-        for(i in 0..(allResults.size)-1){
-            if ((allResults.get(i)?.author?.contains(search) == true) or (allResults.get(i)?.content?.contains(search) == true)){
-                filteredList.add(allResults.get(i))
+        if (allResults != null) {
+            for (i in 0..(allResults!!.size) - 1) {
+                if ((allResults!!.get(i)?.author?.contains(search) == true) or (allResults!!.get(i)?.content?.contains(
+                        search
+                    ) == true)
+                ) {
+                    filteredList.add(allResults!!.get(i))
+                }
             }
+            _news.value = filteredList
         }
-        _news.value = filteredList
     }
 
     fun fetchList(): ArrayList<FilterButton> {

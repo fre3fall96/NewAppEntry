@@ -1,6 +1,10 @@
 package com.example.newappentry.overview
 
+import android.annotation.SuppressLint
+import android.graphics.PorterDuff
 import android.widget.ImageView
+import androidx.compose.ui.graphics.Color
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -21,11 +25,17 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<ObjectArticleInfo>?)
 //this binds to news_list_item fragment with imageview and attribute imageUrl
 @BindingAdapter("imageUrl")
 fun bindImage(imageView: ImageView, imageUrl: String?){
-    imageUrl?.let{
+    if (imageUrl != null) {
+
+        imageUrl?.let{
         val imgUrl = imageUrl.toUri().buildUpon().scheme("https").build()
-        imageView.load(imgUrl){
-            placeholder(R.drawable.loading_animation)
+            imageView.load(imgUrl) {
+                placeholder(R.drawable.loading_animation)
+            }
         }
+        }else{
+        imageView.setImageResource(R.drawable.ic_broken_image)
+        imageView.setBackgroundColor(imageView.resources.getColor(R.color.black))
     }
 
 }
